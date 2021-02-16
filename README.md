@@ -13,7 +13,7 @@
 
 - We have one "producer" and one "consumer". They communicate using 3  Kafka Broker, 3 Partition
 
-![20210211-s1.png](_assets/20210211-s1.png)
+![20210211-s1.png](resources/md_assets/20210211-s1.png)
 
 ### 2.1 Implementation Details
 
@@ -563,19 +563,19 @@ Following picture shows terminal windows
 
 Berore running:
 
-![20210211-s3](_assets/20210211-s3.png)
+![20210211-s3](resources/md_assets/20210211-s3.png)
 
 producer and consumer started:
 
-![20210211-s4](_assets/20210211-s4.png)
+![20210211-s4](resources/md_assets/20210211-s4.png)
 
 Producer sent message to kafka, Consumer took message and inserted into database:
 
-![20210211-s5](_assets/20210211-s5.png)
+![20210211-s5](resources/md_assets/20210211-s5.png)
 
 Database view:
 
-![20210211-s7](_assets/20210211-s7.png)
+![20210211-s7](resources/md_assets/20210211-s7.png)
 
 
 
@@ -760,7 +760,7 @@ Hibernate:
 
 We have 3 "producer" and 3 "consumer". They communicate using 3  Kafka Broker, 3 Partition
 
-![20210211-s2.png](_assets/20210211-s2.png)
+![20210211-s2.png](resources/md_assets/20210211-s2.png)
 
 
 ## 
@@ -779,7 +779,7 @@ We have 3 "producer" and 3 "consumer". They communicate using 3  Kafka Broker, 3
 
 1. We will modify `application.properties' for additional copies like below.
 
-![20210211-s8](_assets/20210211-s8.png)
+![20210211-s8](resources/md_assets/20210211-s8.png)
 
 
 
