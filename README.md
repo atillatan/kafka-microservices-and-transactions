@@ -779,7 +779,7 @@ We have 3 "producer" and 3 "consumer". They communicate using 3  Kafka Broker, 3
 
 1. We will modify `application.properties' for additional copies like below.
 
-![20210211-8](_assets/20210211-8.png)
+![20210211-s8](_assets/20210211-s8.png)
 
 
 
