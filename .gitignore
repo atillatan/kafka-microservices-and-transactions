@@ -5,6 +5,8 @@
 # Maven
 log/
 target/
+.mvn/
+.mvn/wrapper/
 
 
 # Mac
