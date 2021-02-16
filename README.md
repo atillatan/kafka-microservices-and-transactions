@@ -481,7 +481,7 @@ public class TradeErrorHandler implements ErrorHandler {
 ----
 
 1. Install "Docker" https://docs.docker.com/get-docker/
-2. Download "Postgresql" docker container with following terminal command
+2. Download "Postgresql" docker image with following terminal command
 
 ```bash
 $ docker pull postgres
