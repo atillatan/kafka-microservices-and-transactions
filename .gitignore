@@ -1,3 +1,7 @@
+# Java.gitignore
+# Compiled class file
+*.class
+
 # Maven
 log/
 target/
@@ -5,3 +9,10 @@ target/
 
 # Mac
 .DS_Store
+
+
+### Eclipse ###
+
+HELP.md
+/target/
+!.mvn/wrapper/maven-wrapper.jar
