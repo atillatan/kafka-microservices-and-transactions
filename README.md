@@ -499,7 +499,7 @@ $ su postgres
 
 $ psql
 
-$ DROP TABLE IF EXISTS trades;
+$ DROP TABLE IF EXISTS Trade;
 $ CREATE TABLE Trade(id serial PRIMARY KEY, tradeId VARCHAR(255), version integer, counterparty VARCHAR(255), bookid VARCHAR(255),maturityDate DATE, createddate DATE, expiredFlag VARCHAR(255));
 
 ```
