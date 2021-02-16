@@ -1,13 +1,13 @@
 
 ## 1. Solutions
 
-- **Producer:** Spring Boot java application implemented. The application name is "producer"
+- **Producer:** Spring Boot RESTful java application implemented. The application name is "producer"
+
 - **Consumer:** Spring Boot java application implemented. The application name is "consumer" 
-- **Validation to be applied :** Transaction management has been made using "KafkaTransactionManager".
-AOP approach was applied for "Exception Handling" on the producer side, Specific Spring component name is "ControllerAdvice". 
-Exception handling implemented in both side producer and consumer.
-- **Junit test Case to be written on Components** Unit test methods have been developed under the test project in both projects. 
-- **Architecture document:** The architectural structure is presented in this document. 
+
+- **Transaction Management :** Transaction management has been applied 
+
+
 
 ## 2. Scenario 1
 
