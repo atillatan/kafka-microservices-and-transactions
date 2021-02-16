@@ -1,2 +1,7 @@
-/.mvn
-.mvn
+# Maven
+log/
+target/
+
+
+# Mac
+.DS_Store
