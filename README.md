@@ -515,9 +515,9 @@ Download https://kafka.apache.org/downloads Kafka and extract files, installatio
 - Copy following files 
 
 ```bash
-resources/kafka/server.properties
-resources/kafka/server-1.properties
-resources/kafka/server-2.properties
+resources/kafka/config/server.properties
+resources/kafka/config/server-1.properties
+resources/kafka/config/server-2.properties
 ```
 into `{Kafka Folder}/config/`folder
 
