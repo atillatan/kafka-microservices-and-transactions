@@ -1,0 +1,84 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgres1
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=Trade
+    ports:
+      - 5432:5432
+ 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin1    
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=atilla@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=123
+    ports:
+      - 80:80
+    links:
+      - postgres
+
+  # zookeeper:
+  #   image: zookeeper
+  #   container_name: zookeeper1    
+  #   ports:
+  #     - 2181:2181
+  #     - 2888:2888
+  #     - 3888:3888
+
+  kafka:
+    build: resources/kafka-with-zookeeper/
+    container_name: kafka
+    ports: 
+      - 2181:2181
+      - 9092:9092
+      - 9093:9093
+      - 9094:9094
+    # links:
+    #   - zookeeper
+    environment: 
+      - ZOOKEEPER_CONNECT=zookeeper:2181
+
+  producer:
+    build: src/producer/
+    container_name: producer
+    ports: 
+      - 8081:8081
+    links:
+      - kafka
+
+  consumer:
+    build: src/consumer/
+    container_name: consumer
+    ports: 
+      - 8082:8082
+    links:
+      - kafka
+      - postgres
+
+  # kafka3:
+  #   image: debezium/kafka:1.1
+  #   container_name: kafka3
+  #   ports: 
+  #     - 9093:9093
+  #   links:
+  #     - zookeeper
+  #   environment: 
+  #     - ZOOKEEPER_CONNECT=zookeeper:2181
+  #     - KAFKA_BROKER_ID=3
+
+  # kafka4:
+  #   image: debezium/kafka:1.1
+  #   container_name: kafka4
+  #   ports: 
+  #     - 9094:9094
+  #   links:
+  #     - zookeeper
+  #   environment: 
+  #     - ZOOKEEPER_CONNECT=zookeeper:2181            
+#     networks:
+#       - postgres
