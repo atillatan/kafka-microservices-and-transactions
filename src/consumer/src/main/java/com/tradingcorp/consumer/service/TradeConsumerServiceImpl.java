@@ -41,7 +41,7 @@ public class TradeConsumerServiceImpl implements TradeConsumerService {
 	}
 
 	@Transactional(rollbackFor = InvalidTradeException.class)
-	@KafkaListener(topics = "${trade.topic.name}", groupId = "${spring.kafka.consumer.group-id", containerFactory = "kafkaListenerContainerFactory")
+	@KafkaListener(topics = "${trade.topic.name}", groupId = "${spring.kafka.consumer.group-id}", containerFactory = "kafkaListenerContainerFactory")
 	@Override
 	public void consume(Trade trade) throws InvalidTradeException {
 
