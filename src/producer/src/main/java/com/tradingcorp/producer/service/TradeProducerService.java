@@ -30,7 +30,7 @@ public class TradeProducerService {
 	@Autowired
 	private KafkaTemplate<String, Trade> kafkaTemplate;
 
-	// Synchronize
+	// Synchronise
 	public void sendMessage(Trade trade) {
 
 		this.kafkaTemplate.send(tradeTopicName, trade);
@@ -54,6 +54,7 @@ public class TradeProducerService {
 			@Override
 			public void onFailure(Throwable ex) {
 				logger.error("Kafka sent error: " + trade, ex);
+				
 			}
 		});
 	}

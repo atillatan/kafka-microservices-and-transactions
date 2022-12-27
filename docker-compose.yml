@@ -30,26 +30,26 @@ services:
   #     - 2888:2888
   #     - 3888:3888
 
-  kafka:
-    build: resources/kafka-with-zookeeper/
-    container_name: kafka
-    ports: 
-      - 2181:2181
-      - 9092:9092
-      - 9093:9093
-      - 9094:9094
+#  kafka:
+#    build: resources/kafka-with-zookeeper/
+#    container_name: kafka
+#    ports: 
+#      - 2181:2181
+#      - 9092:9092
+#      - 9093:9093
+#      - 9094:9094
     # links:
     #   - zookeeper
-    environment: 
-      - ZOOKEEPER_CONNECT=zookeeper:2181
+#    environment: 
+#      - ZOOKEEPER_CONNECT=zookeeper:2181
 
   producer:
     build: src/producer/
     container_name: producer
     ports: 
       - 8081:8081
-    links:
-      - kafka
+#    links:
+#      - kafka
 
   consumer:
     build: src/consumer/
@@ -57,8 +57,8 @@ services:
     ports: 
       - 8082:8082
     links:
-      - kafka
       - postgres
+#      - kafka
 
   # kafka3:
   #   image: debezium/kafka:1.1

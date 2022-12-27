@@ -16,7 +16,7 @@ import com.tradingcorp.producer.service.TradeProducerService;
 
 
 /**
- * @author Atilla Tanrikulu
+ * @author Atilla Tanrikulu1
  * 
  */
 @RestController
@@ -40,7 +40,7 @@ public class TradeController {
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate maturityDate,
 			@RequestParam("createdDate") 
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdDate,
-			@RequestParam("expiredFlag") String expiredFlag) {
+			@RequestParam("expiredFlag") String expiredFlag) throws InvalidTradeException{
 
 		Trade trade = new Trade();
 		trade.setTradeId(tradeId);

@@ -27,7 +27,7 @@ public class KafkaConsumerConfig {
 	private String tradeGroupId;
 
 	// Consumer-1
-
+	@Bean
 	public ConsumerFactory<String, Trade> consumerFactory() {
 		Map<String, Object> props = new HashMap<>();
 		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
