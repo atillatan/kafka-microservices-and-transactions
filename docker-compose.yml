@@ -22,34 +22,33 @@ services:
     links:
       - postgres
 
-  # zookeeper:
-  #   image: zookeeper
-  #   container_name: zookeeper1    
-  #   ports:
-  #     - 2181:2181
-  #     - 2888:2888
-  #     - 3888:3888
-
-#  kafka:
-#    build: resources/kafka-with-zookeeper/
-#    container_name: kafka
-#    ports: 
+#  zookeeper:
+#    image: zookeeper
+#    container_name: zookeeper1    
+#    ports:
 #      - 2181:2181
-#      - 9092:9092
-#      - 9093:9093
-#      - 9094:9094
-    # links:
-    #   - zookeeper
-#    environment: 
-#      - ZOOKEEPER_CONNECT=zookeeper:2181
+#      - 2888:2888
+#      - 3888:3888
+#  kafka:
+#   build: resources/kafka-with-zookeeper/
+#   container_name: kafka
+#   ports: 
+#     - 2181:2181
+#     - 9092:9092
+#     - 9093:9093
+#     - 9094:9094
+#   links:
+#      - zookeeper
+#   environment: 
+#     - ZOOKEEPER_CONNECT=zookeeper:2181
 
   producer:
     build: src/producer/
     container_name: producer
     ports: 
       - 8081:8081
-#    links:
-#      - kafka
+    links:
+     - kafka
 
   consumer:
     build: src/consumer/
@@ -58,7 +57,31 @@ services:
       - 8082:8082
     links:
       - postgres
-#      - kafka
+      - kafka
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:2181
+  
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+
 
   # kafka3:
   #   image: debezium/kafka:1.1
