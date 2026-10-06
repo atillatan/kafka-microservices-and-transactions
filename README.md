@@ -8,6 +8,8 @@ config:
     curve: linear
 ---
 flowchart TD
+subgraph canvas[" "]
+  direction TB
 
 subgraph group_producer["Trade producer"]
   node_controller["Trade REST API"]
@@ -61,6 +63,9 @@ node_producer_model ~~~ node_producer_config
 node_producer_model ~~~ node_consumer_config
 node_kafka ~~~ node_error_handler
 node_consumer_model ~~~ node_repository
+
+end
+style canvas fill:#efe6fb,stroke:none
 
 click node_controller "https://github.com/atillatan/kafka-microservices-and-transactions/blob/main/src/producer/src/main/java/com/tradingcorp/producer/controller/TradeController.java"
 click node_producer_service "https://github.com/atillatan/kafka-microservices-and-transactions/blob/main/src/producer/src/main/java/com/tradingcorp/producer/service/TradeProducerService.java"
