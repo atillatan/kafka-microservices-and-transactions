@@ -11,7 +11,7 @@ config:
     edgeLabelBackground: "#f8fafc"
     lineColor: "#334155"
   theme: default
-  themeCSS: "a, a text, a span { text-decoration: none !important; } .edgeLabel, .edgeLabel p, .edgeLabel span { color: #1e293b !important; } .cluster-label, .cluster-label p, .cluster-label span, .cluster text { color: #0f172a !important; fill: #0f172a !important; } .marker { fill: #334155 !important; stroke: #334155 !important; }"
+  themeCSS: "a, a text, a span { text-decoration: none !important; } .edgeLabel, .edgeLabel p, .edgeLabel span { color: #1e293b !important; } .cluster-label, .cluster-label p, .cluster-label span, .cluster text { color: #0f172a !important; fill: #0f172a !important; } .marker { fill: #334155 !important; stroke: #334155 !important; } .node rect, .node circle, .node path, .node polygon { transform-box: fill-box; transform-origin: center; transition: transform 0.15s ease, filter 0.15s ease; } .node:hover rect, .node:hover circle, .node:hover path, .node:hover polygon { transform: scale(1.06); filter: brightness(0.93) saturate(1.4); } .node { cursor: pointer; }"
 ---
 flowchart TD
 subgraph canvas[" "]
