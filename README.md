@@ -1,9 +1,93 @@
 
 ## Architecture
 
-![Architecture](docs/architecture.svg)
+```mermaid
+---
+config:
+  flowchart:
+    curve: linear
+---
+flowchart TD
 
-Diagram source: [docs/architecture.mmd](docs/architecture.mmd). Rendered with the ELK layout: `mmdc -i docs/architecture.mmd -o docs/architecture.svg -b white`
+subgraph group_producer["Trade producer"]
+  node_controller["Trade REST API"]
+  node_producer_service["Validate and send"]
+  node_producer_model["Trade payload<br/>[Trade.java]"]
+  node_rest_advice["REST error advice"]
+end
+
+subgraph group_messaging["Kafka messaging"]
+  node_producer_config["Kafka transaction config"]
+  node_kafka["Kafka brokers and topics"]
+  node_consumer_config["Consumer configuration"]
+end
+
+subgraph group_consumer["Trade consumer"]
+  node_consumer_service["Consume and validate"]
+  node_consumer_interface["Consumer contract"]
+  node_consumer_model["Persistent trade entity<br/>[Trade.java]"]
+  node_invalid_exception["Invalid trade exception"]
+  node_error_handler["Dead-letter error handler"]
+  node_dlt_listener["Dead-letter listener"]
+end
+
+subgraph group_persistence["Persistence"]
+  node_repository["Trade repository"]
+  node_postgres[("PostgreSQL")]
+end
+
+node_client(("Trade client"))
+
+node_client -->|"submits trade"| node_controller
+node_controller -->|"validates and sends"| node_producer_service
+node_controller -->|"builds payload"| node_producer_model
+node_controller -->|"raises invalid trade"| node_rest_advice
+node_producer_service -->|"validates payload"| node_producer_model
+node_producer_service -->|"publishes asynchronously"| node_kafka
+node_producer_config -->|"configures producer"| node_kafka
+node_kafka -->|"delivers trade records"| node_consumer_service
+node_consumer_config -->|"configures listeners"| node_consumer_service
+node_consumer_config -->|"registers handler"| node_error_handler
+node_consumer_service -->|"implements contract"| node_consumer_interface
+node_consumer_service -->|"validates and persists"| node_consumer_model
+node_consumer_service -->|"rejects invalid trade"| node_invalid_exception
+node_consumer_service -->|"saves valid trade"| node_repository
+node_repository -->|"persists trades"| node_postgres
+node_error_handler -->|"publishes failed record"| node_kafka
+node_kafka -->|"delivers dead letters"| node_dlt_listener
+
+%% Invisible anchors: keep the groups stacked top to bottom
+node_producer_model ~~~ node_producer_config
+node_producer_model ~~~ node_consumer_config
+node_kafka ~~~ node_error_handler
+node_consumer_model ~~~ node_repository
+
+click node_controller "https://github.com/atillatan/kafka-microservices-and-transactions/blob/main/src/producer/src/main/java/com/tradingcorp/producer/controller/TradeController.java"
+click node_producer_service "https://github.com/atillatan/kafka-microservices-and-transactions/blob/main/src/producer/src/main/java/com/tradingcorp/producer/service/TradeProducerService.java"
+click node_producer_model "https://github.com/atillatan/kafka-microservices-and-transactions/blob/main/src/producer/src/main/java/com/tradingcorp/model/Trade.java"
+click node_producer_config "https://github.com/atillatan/kafka-microservices-and-transactions/blob/main/src/producer/src/main/java/com/tradingcorp/producer/KafkaProducerConfig.java"
+click node_rest_advice "https://github.com/atillatan/kafka-microservices-and-transactions/blob/main/src/producer/src/main/java/com/tradingcorp/producer/controller/TradeControllerAdvice.java"
+click node_consumer_config "https://github.com/atillatan/kafka-microservices-and-transactions/blob/main/src/consumer/src/main/java/com/tradingcorp/consumer/service/KafkaConsumerConfig.java"
+click node_consumer_service "https://github.com/atillatan/kafka-microservices-and-transactions/blob/main/src/consumer/src/main/java/com/tradingcorp/consumer/service/TradeConsumerServiceImpl.java"
+click node_consumer_interface "https://github.com/atillatan/kafka-microservices-and-transactions/blob/main/src/consumer/src/main/java/com/tradingcorp/consumer/service/TradeConsumerService.java"
+click node_consumer_model "https://github.com/atillatan/kafka-microservices-and-transactions/blob/main/src/consumer/src/main/java/com/tradingcorp/model/Trade.java"
+click node_invalid_exception "https://github.com/atillatan/kafka-microservices-and-transactions/blob/main/src/consumer/src/main/java/com/tradingcorp/model/InvalidTradeException.java"
+click node_error_handler "https://github.com/atillatan/kafka-microservices-and-transactions/blob/main/src/consumer/src/main/java/com/tradingcorp/consumer/service/TradeErrorHandler.java"
+click node_repository "https://github.com/atillatan/kafka-microservices-and-transactions/blob/main/src/consumer/src/main/java/com/tradingcorp/consumer/repository/TradeRepository.java"
+click node_dlt_listener "https://github.com/atillatan/kafka-microservices-and-transactions/blob/main/src/consumer/src/main/java/com/tradingcorp/consumer/service/TradeConsumerServiceImpl.java"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_controller,node_producer_service,node_producer_model,node_rest_advice,node_client toneBlue
+class node_producer_config,node_kafka,node_consumer_config toneAmber
+class node_consumer_service,node_consumer_interface,node_consumer_model,node_invalid_exception,node_error_handler,node_dlt_listener toneMint
+class node_repository,node_postgres toneRose
+```
 
 ## 1. Solutions
 
