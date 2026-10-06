@@ -2,6 +2,10 @@
 ## Architecture
 
 ```mermaid
+---
+config:
+  layout: elk
+---
 flowchart TD
 
 subgraph group_producer["Trade producer"]
