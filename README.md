@@ -6,6 +6,10 @@
 config:
   flowchart:
     curve: linear
+  fontFamily: "ui-sans-serif, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif"
+  themeVariables:
+    edgeLabelBackground: "#f8fafc"
+  themeCSS: "a, a text, a span { text-decoration: none !important; }"
 ---
 flowchart TD
 subgraph canvas[" "]
@@ -66,6 +70,10 @@ node_consumer_model ~~~ node_repository
 
 end
 style canvas fill:#efe6fb,stroke:none
+style group_producer fill:#f8fafc,stroke:#e2e8f0
+style group_messaging fill:#f8fafc,stroke:#e2e8f0
+style group_consumer fill:#f8fafc,stroke:#e2e8f0
+style group_persistence fill:#f8fafc,stroke:#e2e8f0
 
 click node_controller "https://github.com/atillatan/kafka-microservices-and-transactions/blob/main/src/producer/src/main/java/com/tradingcorp/producer/controller/TradeController.java"
 click node_producer_service "https://github.com/atillatan/kafka-microservices-and-transactions/blob/main/src/producer/src/main/java/com/tradingcorp/producer/service/TradeProducerService.java"
